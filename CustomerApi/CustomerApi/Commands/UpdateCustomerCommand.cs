@@ -4,29 +4,30 @@ using MediatR;
 
 namespace CustomerApi.Commands
 {
-    public class AddCustomerCommand : IRequest<Customer>
+    public class UpdateCustomerCommand : IRequest<Customer>
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }
         public string? Email { get; set; }
         public string? Phone { get; set; }
-        public bool HasLoyaltyMembership { get; set; } = false;
-
+        public bool HasLoyaltyMembership { get; set; }
     }
 
-    public class AddCustomerCommandHandler(ICustomerService customerService) : 
-        IRequestHandler<AddCustomerCommand, Customer>
+
+    public class UpdateCustomerCommandHandler(ICustomerService customerService) :
+        IRequestHandler<UpdateCustomerCommand, Customer?>
     {
-        public async Task<Customer> Handle(AddCustomerCommand command, CancellationToken cancellationToken)
+        public async Task<Customer?> Handle(UpdateCustomerCommand command, CancellationToken cancellationToken)
         {
             Customer customer = new()
             {
+                Id = command.Id,
                 Name = command.Name,
                 Email = command.Email,
                 HasLoyaltyMembership = command.HasLoyaltyMembership,
                 Phone = command.Phone
             };
-            return await customerService.CreateCustomer(customer);
+            return await customerService.UpdateCustomer(customer);
         }
     }
 }

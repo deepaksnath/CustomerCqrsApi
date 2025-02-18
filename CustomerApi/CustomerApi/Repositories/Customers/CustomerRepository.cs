@@ -21,14 +21,14 @@ namespace CustomerApi.Repositories.Customers
 
         public async Task<Customer?> DeleteCustomer(Guid customerId)
         {
-
             var customer = await _dbContext.Customers.FindAsync(customerId);
             if (customer is not null)
             {
                 _dbContext.Customers.Remove(customer);
                 await _dbContext.SaveChangesAsync();
+                return customer;
             }
-            return customer;
+            return null;
         }
 
         public async Task<Customer?> GetCustomerById(Guid customerId)
@@ -46,9 +46,13 @@ namespace CustomerApi.Repositories.Customers
 
             try
             {
-                _dbContext.Update(customer);
-                await _dbContext.SaveChangesAsync();
-                return customer;
+                if (CustomerExists(customer.Id))
+                {
+                    _dbContext.Update(customer);
+                    await _dbContext.SaveChangesAsync();
+                    return customer;
+                }
+                return null;
             }
             catch (DbUpdateConcurrencyException)
             {
