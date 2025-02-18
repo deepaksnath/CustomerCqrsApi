@@ -1,7 +1,7 @@
 ﻿using CustomerApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CustomerApi.Repositories.Customers
+namespace CustomerApi.Data.Customers
 {
     public class CustomerRepository : ICustomerRepository
     {

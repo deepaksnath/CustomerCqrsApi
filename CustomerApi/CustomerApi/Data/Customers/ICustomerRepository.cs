@@ -1,8 +1,8 @@
 ﻿using CustomerApi.Models;
 
-namespace CustomerApi.Services.Customers
+namespace CustomerApi.Data.Customers
 {
-    public interface ICustomerService
+    public interface ICustomerRepository
     {
         Task<IEnumerable<Customer>> GetCustomers();
 

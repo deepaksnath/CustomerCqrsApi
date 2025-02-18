@@ -1,5 +1,5 @@
 ﻿using CustomerApi.Models;
-using CustomerApi.Services.Customers;
+using CustomerApi.Data.Customers;
 using MediatR;
 
 namespace CustomerApi.Queries
@@ -8,12 +8,12 @@ namespace CustomerApi.Queries
     {
 
     }
-    public class GetAllCustomersQueryHandler(ICustomerService customerService) :
+    public class GetAllCustomersQueryHandler(ICustomerRepository customerRepository) :
         IRequestHandler<GetAllCustomersQuery, IEnumerable<Customer>>
     {
         public async Task<IEnumerable<Customer>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
         {
-            return await customerService.GetCustomers();
+            return await customerRepository.GetCustomers();
         }
     }
 }

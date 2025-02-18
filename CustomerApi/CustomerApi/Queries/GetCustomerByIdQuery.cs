@@ -1,5 +1,5 @@
 ﻿using CustomerApi.Models;
-using CustomerApi.Services.Customers;
+using CustomerApi.Data.Customers;
 using MediatR;
 
 namespace CustomerApi.Queries
@@ -7,12 +7,12 @@ namespace CustomerApi.Queries
     public record GetCustomerByIdQuery(Guid Id) : IRequest<Customer>
     {
     }
-    public class GetCustomerByIdQueryHandler(ICustomerService customerService) :
+    public class GetCustomerByIdQueryHandler(ICustomerRepository customerRepository) :
         IRequestHandler<GetCustomerByIdQuery, Customer?>
     {
         public async Task<Customer?> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
         {
-            return await customerService.GetCustomerById(request.Id);
+            return await customerRepository.GetCustomerById(request.Id);
         }
     }
 }

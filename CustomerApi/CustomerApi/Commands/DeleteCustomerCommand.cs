@@ -1,5 +1,5 @@
 ﻿using CustomerApi.Models;
-using CustomerApi.Services.Customers;
+using CustomerApi.Data.Customers;
 using MediatR;
 
 namespace CustomerApi.Commands
@@ -8,12 +8,12 @@ namespace CustomerApi.Commands
     {
     }
 
-    public class DeleteCustomerCommandHandler(ICustomerService customerService) :
+    public class DeleteCustomerCommandHandler(ICustomerRepository customerRepository) :
         IRequestHandler<DeleteCustomerCommand, Customer?>
     {
         public async Task<Customer?> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
-            return await customerService.DeleteCustomer(request.Id);
+            return await customerRepository.DeleteCustomer(request.Id);
         }
     }
 }

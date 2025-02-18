@@ -1,5 +1,5 @@
 ﻿using CustomerApi.Models;
-using CustomerApi.Services.Customers;
+using CustomerApi.Data.Customers;
 using MediatR;
 
 namespace CustomerApi.Commands
@@ -14,7 +14,7 @@ namespace CustomerApi.Commands
 
     }
 
-    public class AddCustomerCommandHandler(ICustomerService customerService) : 
+    public class AddCustomerCommandHandler(ICustomerRepository customerRepository) : 
         IRequestHandler<AddCustomerCommand, Customer>
     {
         public async Task<Customer> Handle(AddCustomerCommand command, CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ namespace CustomerApi.Commands
                 HasLoyaltyMembership = command.HasLoyaltyMembership,
                 Phone = command.Phone
             };
-            return await customerService.CreateCustomer(customer);
+            return await customerRepository.CreateCustomer(customer);
         }
     }
 }

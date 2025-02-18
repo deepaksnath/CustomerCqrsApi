@@ -1,5 +1,5 @@
 using CustomerApi.Extensions;
-using CustomerApi.Repositories;
+using CustomerApi.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

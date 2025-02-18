@@ -1,6 +1,5 @@
-﻿using CustomerApi.Repositories;
-using CustomerApi.Repositories.Customers;
-using CustomerApi.Services.Customers;
+﻿using CustomerApi.Data;
+using CustomerApi.Data.Customers;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,7 +31,6 @@ namespace CustomerApi.Extensions
 
             //Services
             builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-            builder.Services.AddScoped<ICustomerService, CustomerService>();
 
             return builder;
         }

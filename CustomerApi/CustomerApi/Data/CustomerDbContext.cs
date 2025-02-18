@@ -1,7 +1,7 @@
 ﻿using CustomerApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CustomerApi.Repositories
+namespace CustomerApi.Data
 {
     public class CustomerDbContext : DbContext
     {
@@ -12,12 +12,5 @@ namespace CustomerApi.Repositories
 
         public DbSet<Customer> Customers { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //modelBuilder.Entity<Customer>()
-            //        .Property(s => s.Id)
-            //        .HasColumnName("Id")
-            //        .IsRequired();
-        }
     }
 }
