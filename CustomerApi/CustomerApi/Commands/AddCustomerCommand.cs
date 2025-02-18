@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CustomerApi.Commands
 {
-    public class AddCustomerCommand :IRequest
+    public class AddCustomerCommand :IRequest<Customer>
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = "Customer Name";
@@ -14,9 +14,10 @@ namespace CustomerApi.Commands
 
     }
 
-    public class AddCustomerCommandHandler(ICustomerService customerService) : IRequestHandler<AddCustomerCommand>
+    public class AddCustomerCommandHandler(ICustomerService customerService) : 
+        IRequestHandler<AddCustomerCommand, Customer>
     {
-        public Task Handle(AddCustomerCommand command, CancellationToken cancellationToken)
+        public async Task<Customer> Handle(AddCustomerCommand command, CancellationToken cancellationToken)
         {
             Customer customer = new()
             {
@@ -25,7 +26,7 @@ namespace CustomerApi.Commands
                 HasLoyaltyMembership = command.HasLoyaltyMembership,
                 Phone = command.Phone
             };
-            return customerService.CreateCustomer(customer);
+            return await customerService.CreateCustomer(customer);
         }
     }
 }
