@@ -3,7 +3,6 @@ using CustomerApi.Repositories.Customers;
 using CustomerApi.Services.Customers;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 namespace CustomerApi.Extensions
 {
@@ -15,8 +14,6 @@ namespace CustomerApi.Extensions
             builder.Services.AddMediatR(s => s.RegisterServicesFromAssemblyContaining<Program>());
 
             //Fluent Validations
-            //builder.Services.AddControllers().AddFluentValidation(
-            //    v=>v.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
             builder.Services.AddFluentValidationAutoValidation()
                 .AddFluentValidationClientsideAdapters();
 
@@ -28,7 +25,11 @@ namespace CustomerApi.Extensions
             var CONNECTION_STRING = builder.Configuration.GetConnectionString("CustomerDbConnection");
             builder.Services.AddDbContextPool<CustomerDbContext>(
                 options => options.UseSqlServer(CONNECTION_STRING));
-                        
+
+            //Swagger
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
             //Services
             builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
